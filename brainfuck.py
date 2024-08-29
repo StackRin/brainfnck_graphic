@@ -1,6 +1,5 @@
 import tkinter as tk
-import os
-from tkinter import messagebox, filedialog
+from tkinter import  filedialog
 
 
 def clean_up(code):
@@ -104,9 +103,12 @@ class BrainfuckInterpreter:
             else:
                 self.loop_stack.pop()
 
+    def sign_clear_memory(self):
+        self.memory = [0] * 30000
+
     def sign_run(self):
         global input_var
-
+        self.ip = 0
         var = input_var.get()
         try:
             while self.ip < len(var):
@@ -176,7 +178,7 @@ for i in range(6):  # 假设有6行
 
 menu = tk.Menu(root)
 file_menu = tk.Menu(menu, tearoff=False)
-file_menu.add_command(label="重置",command=lambda: input_var.set(""))
+file_menu.add_command(label="重置", command=lambda: input_var.set(""))
 file_menu.add_command(label="打开", command=insert_from_file)
 file_menu.add_command(label="退出", command=root.quit)
 menu.add_cascade(label="文件", menu=file_menu)
@@ -206,6 +208,7 @@ button_right_arrow = tk.Button(root, text='>', relief=tk.FLAT, bg='#eacda1', com
 button_output = tk.Button(root, text='.', relief=tk.FLAT, bg='#eacda1', command=sign_output)
 button_input = tk.Button(root, text=',', relief=tk.FLAT, bg='#eacda1', command=sign_input)
 button_left_clear = tk.Button(root, text='c', relief=tk.FLAT, bg='#eacda1', command=sign_clear)
+button_memory_clear = tk.Button(root, text='cm', relief=tk.FLAT, bg='#eacda1', command=bf.sign_clear_memory)
 button_right_run = tk.Button(root, text='run', relief=tk.FLAT, bg='#eacda1', command=bf.sign_run)
 
 # 按钮布局
@@ -218,7 +221,8 @@ button_right_arrow.grid(row=5, column=3, sticky="nsew", padx=4, pady=2)
 button_output.grid(row=4, column=4, sticky="nsew", padx=4, pady=2)
 button_input.grid(row=5, column=4, sticky="nsew", padx=4, pady=2)
 button_left_clear.grid(row=4, column=5, sticky="nsew", padx=4, pady=2)
-button_right_run.grid(row=5, column=5, sticky="nsew", padx=4, pady=2)
+button_memory_clear.grid(row=5, column=5, sticky="nsew", padx=4, pady=2)
+button_right_run.grid(row=5, column=6, sticky="nsew", padx=4, pady=2)
 
 # ... (其他代码保持不变)
 check_maximized()
